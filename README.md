@@ -32,6 +32,15 @@ npx skills-installer install @aj-geddes/claude-code-bmad-skills/business-analyst
 npx skills-installer install @rshankras/claude-code-apple-skills/prd-generator
 ```
 
+### 推荐技能（开发阶段）
+
+```bash
+# Superpowers - 完整软件开发工作流
+# Claude Code 内置插件市场安装
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+```
+
 ### 多客户端安装
 
 ```bash
@@ -56,9 +65,9 @@ npx skills-installer install <skill-name> --client opencode
 
 ---
 
-## 组合工作流
+## 完整工作流
 
-`product-reverse-analysis` + `business-analyst` + `prd-generator` 完整产品开发流程
+### 产品阶段
 
 ```
 竞品分析 → 产品发现 → PRD生成
@@ -66,3 +75,33 @@ npx skills-installer install <skill-name> --client opencode
 ```
 
 [查看三技能组合工作流文档](product-reverse-analysis/reference/three-skill-product-workflow.md)
+
+### 开发阶段
+
+```
+brainstorming → writing-plans → development → TDD → code-review
+    设计细化        实现计划        开发执行      测试      代码审查
+```
+
+**Superpowers** 提供完整的软件开发工作流，包含 20+ 战斗验证的技能：
+
+- **brainstorming** - 设计细化与头脑风暴
+- **writing-plans** - 创建详细实现计划
+- **test-driven-development** - TDD 红绿重构循环
+- **systematic-debugging** - 系统化根因分析
+- **requesting-code-review** - 代码审查流程
+
+[了解更多：obra/superpowers](https://github.com/obra/superpowers)
+
+### 端到端流程
+
+| 阶段 | 技能 | 输出 |
+|------|------|------|
+| 竞品分析 | product-reverse-analysis | 竞品PRD |
+| 产品发现 | business-analyst | 产品简报 |
+| 需求文档 | prd-generator | 完整PRD |
+| 设计细化 | superpowers:brainstorming | 设计文档 |
+| 实现计划 | superpowers:writing-plans | 开发计划 |
+| 开发执行 | superpowers:subagent-driven-development | 代码实现 |
+| 测试驱动 | superpowers:test-driven-development | 测试+代码 |
+| 代码审查 | superpowers:requesting-code-review | 质量保证 |

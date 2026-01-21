@@ -214,6 +214,50 @@ A: 推荐按顺序，但不是强制：
 
 ---
 
+## 下一步：开发阶段
+
+完成产品阶段后，使用 **Superpowers** 进入开发阶段：
+
+### 安装 Superpowers
+
+```bash
+# Claude Code 内置插件市场
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+```
+
+### 开发工作流
+
+```
+PRD → brainstorming → writing-plans → development → TDD → code-review
+      设计细化        实现计划        开发执行      测试      代码审查
+```
+
+### Superpowers 核心技能
+
+| 技能 | 用途 |
+|------|------|
+| brainstorming | 苏格拉底式设计细化，探索替代方案 |
+| writing-plans | 创建详细实现计划，任务拆解到 2-5 分钟 |
+| test-driven-development | 红绿重构 TDD 循环 |
+| systematic-debugging | 四阶段根因分析流程 |
+| requesting-code-review | 代码审查与质量保证 |
+| subagent-driven-development | 子代理并行开发 |
+
+### 端到端流程
+
+| 阶段 | 产品阶段 | 开发阶段 |
+|------|----------|----------|
+| 1 | 竞品分析 | brainstorming (设计细化) |
+| 2 | 产品发现 | writing-plans (实现计划) |
+| 3 | PRD生成 | subagent-driven-development (开发) |
+| 4 | - | test-driven-development (TDD) |
+| 5 | - | requesting-code-review (审查) |
+
+[了解更多：obra/superpowers](https://github.com/obra/superpowers)
+
+---
+
 ## 相关资源
 
 - [product-reverse-analysis 主文档](../SKILL.md)
