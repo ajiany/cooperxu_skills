@@ -11,6 +11,27 @@ description: 当需要分析现有产品以提取需求、用户故事和业务�
 
 **核心原则**：深度产品分析需要自动化工具 + 结构化思维。仅靠手动浏览是不够的。
 
+## 快速开始
+
+**5分钟完成一个页面的快速分析**：
+
+```bash
+# 1. 获取内容概览
+mcp__web_reader__webReader(url)
+
+# 2. 查看页面结构
+browser_snapshot()
+
+# 3. 问自己三个问题
+#    - 这个功能给谁用？
+#    - 解决什么痛点？
+#    - 如何变现/获客/留存？
+
+# 4. 输出结构化笔记
+```
+
+详细完整分析请参考下方"分步方法"。
+
 ## 使用场景
 
 ```dot
@@ -102,11 +123,23 @@ digraph when_to_use {
    ```javascript
    // 在页面上下文中执行browser_evaluate
    () => {
+     const frameworks = [];
+     if (window.React || window._reactRootContainer) frameworks.push('React');
+     if (window.Vue || document.querySelector('[data-v-]')) frameworks.push('Vue');
+     if (window.angular) frameworks.push('Angular');
+     if (document.querySelector('[class*="ant-"]')) frameworks.push('Ant Design');
+     if (window.__NUXT__) frameworks.push('Nuxt');
+     if (window.__NEXT_DATA__) frameworks.push('Next.js');
+
      return {
-       frameworks: detectReactVueAngular(),
-       uiLibs: detectUILibraries(),
-       stateMgmt: detectStateManagement()
-     }
+       frameworks: frameworks,
+       uiLibs: [...new Set([...document.querySelectorAll('[class]')].map(el => {
+         const match = el.className.match(/(ant-|mui-|chakra-|tailwind)/);
+         return match ? match[0] : null;
+       }).filter(Boolean))].slice(0, 5),
+       stateMgmt: !!window.__REDUX_STORE__ || !!window.__VUE_DEVTOOLS_GLOBAL_HOOK__,
+       buildTool: window.__NUXT__ ? 'Nuxt' : window.__NEXT_DATA__ ? 'Next.js' : 'Unknown'
+     };
    }
    ```
 
@@ -214,6 +247,58 @@ digraph when_to_use {
 **复杂度**：故事点
 ```
 
+#### 完整输出示例
+
+```markdown
+# AIBase 产品逆向分析
+
+## 产品概述
+- **定位**：AI行业一站式信息枢纽
+- **目标用户**：AI从业者(40%)、开发者(30%)、创作者(15%)
+- **核心价值**：聚合AI资讯、工具、模型，降低发现成本
+- **用户规模**：850,000+ 用户，1,980,000+ PV/月
+
+## 商业模式
+**免费+订阅转化+企业服务** 三层漏斗：
+1. 资讯板块 → 驱动流量和SEO
+2. 工具库/模型广场 → 诱导注册 (28,000+ 订阅)
+3. 企业服务/CPS佣金 → 最终变现
+
+## 功能模块分析
+
+### 1. 资讯聚合 (P0 - 流量引擎)
+- **用户价值**：一站式获取AI行业动态，无需多站浏览
+- **技术实现**：自动抓取+人工审核，RSS订阅
+- **商业价值**：SEO流量入口，日均95,000+资讯
+
+### 2. 工具库导航 (P0 - 注册诱饵)
+- **用户价值**：发现和对比AI工具，按热度/评分筛选
+- **技术实现**：用户提交+人工审核，流量排名算法
+- **商业价值**：CPS佣金分成，引导注册
+
+### 3. 模型广场 (P1 - 开发者留存)
+- **用户价值**：对比大模型参数、价格、性能
+- **用户画像**：AI开发者、技术决策者
+- **商业价值**：企业服务引流，API返佣
+
+## 用户故事示例
+
+### US-001: 工具发现
+**作为** AI从业者
+**我希望** 快速找到最新最热的AI工具
+**以便** 保持竞争力并应用到工作中
+
+**验收标准**：
+- [x] 支持按分类/热度/评分筛选
+- [x] 显示工具简介和官网链接
+- [x] 提供用户评价和使用案例
+
+## 差异化机会
+- 缺少社区互动 (评论、讨论)
+- 个性化推荐能力弱
+- 深度分析内容不足
+```
+
 ## 常见错误
 
 | 错误 | 为什么错 | 如何修正 |
@@ -237,6 +322,23 @@ digraph when_to_use {
 - 深度：商业模式、用户旅程、技术架构
 - 可操作性：高——可战略性复制或竞争
 
+## 常见问题
+
+**Q: 需要登录的页面怎么分析？**
+A: 可以先分析公开部分，再基于公开信息推断登录后的功能。如果需要，可使用 `browser_fill_form` 填写登录信息（注意账号安全）。
+
+**Q: SPA（单页应用）怎么处理？**
+A: 使用 `browser_wait_for` 等待动态内容加载，配合 `browser_snapshot` 确认内容已渲染完成。
+
+**Q: 分析时间太长怎么办？**
+A: 优先使用快速开始流程，仅聚焦核心功能。完整分析可以分多次进行。
+
+**Q: 如何验证我的分析是否正确？**
+A: 对比用户评价、App Store 评论、社交媒体讨论，看是否与你的推断一致。
+
+**Q: 移动端应用能分析吗？**
+A: 本技能主要针对 Web 产品。移动端可考虑模拟器或分析竞品的 Web 版本。
+
 ## 红旗警示——你做错了
 
 - "我就截个图" ← 使用 `browser_snapshot`
@@ -246,3 +348,9 @@ digraph when_to_use {
 - "这只是个列表页" ← 列表解决了什么业务问题？
 
 **所有这些意味着**：停下来。重读这个skill。再深入一点。
+
+## 相关资源
+
+- [三技能组合工作流](reference/three-skill-product-workflow.md) - 本技能 + business-analyst + prd-generator 完整产品开发流程
+- [business-analyst 技能](https://github.com/aj-geddes/claude-code-bmad-skills) - 产品发现与需求分析
+- [prd-generator 技能](https://github.com/aj-geddes/claude-code-bmad-skills) - 生成完整 PRD 文档
