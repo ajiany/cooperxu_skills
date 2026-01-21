@@ -18,7 +18,7 @@ cp -r product-reverse-analysis ~/.claude/skills/
 npx skills-installer install @aj-geddes/claude-code-bmad-skills/business-analyst
 
 # prd-generator - 产品需求文档生成
-npx skills-installer install @aj-geddes/claude-code-bmad-skills/prd-generator
+npx skills-installer install @rshankras/claude-code-apple-skills/prd-generator
 
 # 同时安装到多个客户端
 npx skills-installer install <skill-name> --client claude-code

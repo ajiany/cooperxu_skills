@@ -10,7 +10,7 @@
 |------|------|------|
 | **product-reverse-analysis** | cooperxu_skills (本仓库) | 竞品逆向分析，提取功能、用户故事、商业模式 |
 | **business-analyst** | @aj-geddes/claude-code-bmad-skills | 产品发现与需求分析，创建产品简报 |
-| **prd-generator** | @aj-geddes/claude-code-bmad-skills | 从产品计划生成完整 PRD 文档 |
+| **prd-generator** | @rshankras/claude-code-apple-skills | 从产品计划生成完整 PRD 文档 |
 
 ---
 
@@ -166,7 +166,7 @@ cp -r cooperxu_skills/product-reverse-analysis ~/.claude/skills/
 npx skills-installer install @aj-geddes/claude-code-bmad-skills/business-analyst
 
 # 3. prd-generator
-npx skills-installer install @aj-geddes/claude-code-bmad-skills/prd-generator
+npx skills-installer install @rshankras/claude-code-apple-skills/prd-generator
 
 # 安装到多个客户端
 npx skills-installer install <skill-name> --client claude-code
@@ -218,4 +218,4 @@ A: 推荐按顺序，但不是强制：
 
 - [product-reverse-analysis 主文档](../SKILL.md)
 - [business-analyst 文档](https://github.com/aj-geddes/claude-code-bmad-skills)
-- [prd-generator 文档](https://github.com/aj-geddes/claude-code-bmad-skills)
+- [prd-generator 文档](https://github.com/rshankras/claude-code-apple-skills)
